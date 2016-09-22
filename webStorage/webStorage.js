@@ -5,10 +5,18 @@ function setStorage(StorageType, key,value) {
     /*StorageType:true is local,false is session
     key is StorageKey
     value is StorageValue*/
-    if(StorageType==true){
-        localStorage.setItem(key,String(value));
+    if (typeof value != "object") {
+        if (StorageType == true) {
+            localStorage.setItem(key, String(value));
+        } else {
+            sessionStorage.setItem(key, String(value));
+        }
     }else {
-        sessionStorage.setItem(key,String(value));
+        if (StorageType == true) {
+            localStorage.setItem(key, JSON.stringify(value));
+        } else {
+            sessionStorage.setItem(key, JSON.stringify(value));
+        }
     }
 }
 function removeStorage(key) {
@@ -23,19 +31,19 @@ function getStorage(StorageType, key,valueType,fn) {
     //valueType:"string","nub","bool","object","Array"
     if(StorageType==true){
         if(valueType=="string"){
-            return fn(sessionStorage.getItem(key));
+            return fn(localStorage.getItem(key));
         }else if(valueType=="nub"){
-            return fn(parseFloat(sessionStorage.getItem(key)));
+            return fn(parseFloat(localStorage.getItem(key)));
         }else if(valueType=="bool"){
-            if(sessionStorage.getItem(key)==true){
+            if(localStorage.getItem(key)==true){
                 return fn(Boolean([]));
             }else {
                 return fn(Boolean(0));
             }
         }else if(valueType=="object"){
-            return fn(eval("("+sessionStorage.getItem(key)+")"));
+            return fn(eval("("+localStorage.getItem(key)+")"));
         }else if(valueType=="Array"){
-            var data=sessionStorage.getItem(key);
+            var data=localStorage.getItem(key);
             var Array=data.split(",");
             return fn(Array);
         }
