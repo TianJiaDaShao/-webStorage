@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="webStorage.js"></script>
+</head>
+<body>
+<script>
+    var a=[1,2,3];
+    setStorage(true,"a",a);
+    getStorage(true,"a","Array",function (data) {
+        console.log(data);
+    })
+</script>
+</body>
+</html>
